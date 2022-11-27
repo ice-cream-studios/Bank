@@ -37,11 +37,11 @@ module.exports = {
         
         while(true) {
             var post = await client.globals.reddit(animalReddits.get(animal).sub);
-            if(!post.nsfw && post.image.includes('https://i.redd.it')) break;
+            if(!post.nsfw && post.image?.includes('https://i.redd.it')) break;
         }
 
         const animalEmbed = await new EmbedBuilder()
-            .setColor(client.config.embedColour)
+            .setColor(interaction.embedColour)
             .setTitle(`${animalReddits.get(animal).msg} Here\'s your ${animal}!`)
             .setURL(post.url)
             .setImage(post.image);
