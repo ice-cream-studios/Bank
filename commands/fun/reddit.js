@@ -11,20 +11,23 @@ module.exports = {
 
         const { EmbedBuilder } = require('discord.js');
         const reddit = await interaction.options.getString('reddit');
+        if(typeof reddit !== 'string') reddit = reddit.toString();
         await interaction.deferReply();
         
         try {
             while(true) {
                 var post = await client.globals.reddit(reddit);
-                if(!post.image) post.image = '';
-                if(!post.nsfw && post.image?.includes('https://i.redd.it')) break;
+                // if(!post.image) post.image = '';
+                if(!post.nsfw) break;
             }
 
             const redditEmbed = await new EmbedBuilder()
                 .setColor(interaction.embedColour)
                 .setTitle(`${reddit}: ${post.title}`)
                 .setURL(post.url)
-                .setImage(post.image);
+
+            if(post.description) redditEmbed.setDescription(post.description);
+            if(post.image) redditEmbed.setImage(post.image);
 
             await interaction.editReply({ embeds: [redditEmbed] });
         } catch(e) {
