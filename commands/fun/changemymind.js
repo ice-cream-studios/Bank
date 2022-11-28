@@ -11,12 +11,13 @@ module.exports = {
 
         const { AttachmentBuilder } = require('discord.js');
         const { Canvas } = require('canvacord');
+        await interaction.deferReply();
 
         const text = interaction.options.getString('text');
         let image = await Canvas.changemymind(text);
         image = await new AttachmentBuilder(image, 'cmm.png');
 
-        await interaction.reply({ files: [image] });
+        await interaction.editReply({ files: [image] });
 
     }
 };

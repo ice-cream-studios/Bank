@@ -12,6 +12,7 @@ module.exports = {
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
+        await interaction.deferReply();
  
         const number = await interaction.options.getInteger('number') || 1;
         const sides = await interaction.options.getInteger('sides') || 6;
@@ -29,7 +30,7 @@ module.exports = {
             .setTitle(`I rolled ${dieOrDice}!:\n:game_die: | ${result.join(', ')}`)
             .setImage(image)
 
-        await interaction.reply({ embeds: [diceEmbed] })
+        await interaction.editReply({ embeds: [diceEmbed] })
 
     }
 };

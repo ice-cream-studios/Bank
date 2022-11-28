@@ -6,7 +6,6 @@ module.exports = {
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
-        
         await interaction.deferReply();
 
         while(true) {

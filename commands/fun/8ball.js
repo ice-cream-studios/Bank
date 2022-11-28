@@ -9,6 +9,7 @@ module.exports = {
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
+        await interaction.deferReply();
 
         const eightBallResponseList = [
             "As I see it, yes",
@@ -35,7 +36,7 @@ module.exports = {
             .setColor(interaction.embedColour)
             .setTitle(`${interaction.options.getString('question') ? interaction.options.getString('question') + '\n' : ''}:8ball: | ${eightBallResponseList[index]}`)
 
-        await interaction.reply({ embeds: [eightBallEmbed] })
+        await interaction.editReply({ embeds: [eightBallEmbed] })
 
     }
 };

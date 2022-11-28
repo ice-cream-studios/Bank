@@ -9,6 +9,7 @@ module.exports = {
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
+        await interaction.deferReply();
  
         const user = interaction.options.getUser('user') || interaction.user;
         const avatar = user.avatarURL({ dynamic: true }) || 'https://cdn.discordapp.com/embed/avatars/0.png';
@@ -18,7 +19,7 @@ module.exports = {
             .setTitle(`Here's ${user.username}'s avatar!`)
             .setImage(avatar)
 
-        await interaction.reply({ embeds: [avatarEmbed] })
+        await interaction.editReply({ embeds: [avatarEmbed] })
 
     }
 };

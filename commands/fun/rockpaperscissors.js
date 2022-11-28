@@ -15,6 +15,7 @@ module.exports = {
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
+        await interaction.deferReply();
 
         const choice = await interaction.options.getString('rockpaperorscissors');
         let response = '';
@@ -46,7 +47,7 @@ module.exports = {
             .setColor(interaction.embedColour)
             .setTitle(`:rock: :newspaper: :scissors: | ${response}`)
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.editReply({ embeds: [embed] });
 
     }
 };

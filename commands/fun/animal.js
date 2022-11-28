@@ -22,6 +22,7 @@ module.exports = {
 
         const { EmbedBuilder } = require('discord.js');
         const animal = await interaction.options.getString('species');
+        await interaction.deferReply();
 
         const animalReddits = await new Map([
             ['bird', { msg: 'Chirp!', sub: 'birds' }],
@@ -46,7 +47,7 @@ module.exports = {
             .setURL(post.url)
             .setImage(post.image);
 
-        await interaction.reply({ embeds: [animalEmbed] });
+        await interaction.editReply({ embeds: [animalEmbed] });
 
     }
 };
