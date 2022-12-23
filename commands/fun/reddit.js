@@ -18,6 +18,10 @@ module.exports = {
             while(true) {
                 var post = await client.globals.reddit(reddit);
                 // if(!post.image) post.image = '';
+                if(post.nsfw && !interaction.channel.nsfw) {
+                    await interaction.editReply(`The subreddit \`${reddit}\` is NSFW!`);
+                    return;
+                }   
                 if(!post.nsfw) break;
             }
 
