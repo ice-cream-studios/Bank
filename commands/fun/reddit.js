@@ -15,11 +15,7 @@ module.exports = {
         await interaction.deferReply();
         
         try {
-            while(true) {
-                var post = await client.globals.reddit(reddit);
-                // if(!post.image) post.image = '';
-                if(!post.nsfw) break;
-            }
+            const post = await client.globals.reddit(reddit);
 
             const redditEmbed = await new EmbedBuilder()
                 .setColor(interaction.embedColour)
@@ -31,7 +27,7 @@ module.exports = {
 
             await interaction.editReply({ embeds: [redditEmbed] });
         } catch(e) {
-            await interaction.editReply(`The subreddit \`${reddit}\` does not exist!`);
+            await interaction.editReply(`The subreddit \`${reddit}\` does not exist, or the post found was NSFW; if you think this is a mistake then please try again.`);
         }
 
     }
