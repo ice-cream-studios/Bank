@@ -15,7 +15,19 @@ module.exports = {
         await interaction.deferReply();
         
         try {
+<<<<<<< HEAD
             const post = await client.globals.reddit(reddit);
+=======
+            while(true) {
+                var post = await client.globals.reddit(reddit);
+                // if(!post.image) post.image = '';
+                if(post.nsfw && !interaction.channel.nsfw) {
+                    await interaction.editReply(`The subreddit \`${reddit}\` is NSFW!`);
+                    return;
+                }   
+                if(!post.nsfw) break;
+            }
+>>>>>>> b138b36ffa8fec0d5e2ecd0e2cb9692dc2bd75dd
 
             const redditEmbed = await new EmbedBuilder()
                 .setColor(interaction.embedColour)
