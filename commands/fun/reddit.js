@@ -4,30 +4,24 @@ module.exports = {
         .setName("reddit")
         .setDescription("Send a post from a subreddit of your choice!")
         .addStringOption(option =>
-            option.setName('reddit')
+            option.setName('subreddit')
                 .setDescription('Which reddit do you want to see?')
                 .setRequired(true)),
     run: async function(client, interaction) {
 
         const { EmbedBuilder } = require('discord.js');
-        const reddit = await interaction.options.getString('reddit');
+        const reddit = await interaction.options.getString('subreddit');
         if(typeof reddit !== 'string') reddit = reddit.toString();
         await interaction.deferReply();
         
         try {
-<<<<<<< HEAD
+
             const post = await client.globals.reddit(reddit);
-=======
-            while(true) {
-                var post = await client.globals.reddit(reddit);
-                // if(!post.image) post.image = '';
-                if(post.nsfw && !interaction.channel.nsfw) {
-                    await interaction.editReply(`The subreddit \`${reddit}\` is NSFW!`);
-                    return;
-                }   
-                if(!post.nsfw) break;
+            
+            if(post.nsfw && !interaction.channel.nsfw) {
+                await interaction.editReply(`The subreddit \`r/${reddit}\` is NSFW, and this channel is not marked as NSFW.\nPlease try again later or try again in an NSFW channel.`)
+                return
             }
->>>>>>> b138b36ffa8fec0d5e2ecd0e2cb9692dc2bd75dd
 
             const redditEmbed = await new EmbedBuilder()
                 .setColor(interaction.embedColour)
@@ -35,7 +29,7 @@ module.exports = {
                 .setURL(post.url)
 
             if(post.description) redditEmbed.setDescription(post.description);
-            if(post.image) redditEmbed.setImage(post.image);
+            if(post.image && post.image.includes('https://i.redd.it/')) redditEmbed.setImage(post.image);
 
             await interaction.editReply({ embeds: [redditEmbed] });
         } catch(e) {
